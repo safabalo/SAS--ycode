@@ -2,7 +2,7 @@
 
 int main()
 {
-	//**Challenge 1 les fonctions**//
+	//**Challenge 2 les fonctions**//
 	int a, b;
 	printf("Entrez la valeur de A: ");
 	scanf("%d",&a);
