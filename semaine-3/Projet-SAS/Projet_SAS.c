@@ -2,6 +2,9 @@
 #include<stdlib.h>
 #include<string.h>
 #define Max 10
+void menu();
+void affichage();
+void rechercher();
 
 typedef struct{
 	char Nom[12] ;
@@ -9,13 +12,13 @@ typedef struct{
 	char CIN[12];
 	float Montant;
 }Bank;
+Bank clientn[Max];
 //***________Declaration Fichier_______***//
 FILE *f;
 //***___________Fonction client_________***//
-void clientn() 
+void clientns() 
 {
-	int i, n= 3, A;
-	Bank clientn[Max];
+	int i, n= 3;
 //***________Fichier Cree_______***//
 	f = fopen("Donnees_clients.txt","a");
 	
@@ -23,8 +26,9 @@ void clientn()
 		printf("le fichier n'existe pas \n");
 	}
 	else
-	{ //***_______Boucle de creation de donnes pour 100 clients______***//
+	{ //***_______Boucle de creation de donnes pour 3 clients______***//
 		n<=Max;
+		
 		for(i=0;i<n;i++)
 		{
 			
@@ -47,11 +51,16 @@ void clientn()
 	    	fprintf(f ,"Nom: %s \t", clientn[i].Nom);
 			fprintf(f ,"Prenom: %s \t", clientn[i].Prenom);
 			fprintf(f ,"CIN: %s \t", clientn[i].CIN);
-			fprintf(f ,"Montant: %f \t", clientn[i].Montant);
-			}
+			fprintf(f ,"Montant: %.2f \t", clientn[i].Montant);
+			fprintf(f,"\n");
+			
+		}
+		
 	}
 	
 	fclose(f);
+	system("cls");
+	menu();
 }
 //***________Fonction Nouveau Client______***//
 void client1()
@@ -79,8 +88,12 @@ void client1()
 			
 			fprintf(f ,"CIN: %s \t", client1.CIN);
 			
-			fprintf(f ,"Montant: %f \t", client1.Montant); }
+			fprintf(f ,"Montant: %.2f \t", client1.Montant); 
+			fprintf(f,"\n"); }
+		
 	fclose(f);
+	system("cls");
+	menu();
 }
 
 
@@ -88,29 +101,29 @@ void client1()
 void menu()
 { int Menu_Bank_X;
 	printf("\t \t \t ********Menu Bank X*********** \n");
-	printf("\t \t \t --------1- Nouveau clients----- \n");
-	printf("\t \t \t --------2- Ajouter plusieurs clients--- \n");
-	printf("\t \t \t --------3- Affichage-------------\n");
-	printf("\t \t \t --------4- Quitter--------------- \n");
+	printf("\t \t \t --------1--Nouveau clients----- \n");
+	printf("\t \t \t --------2--Ajouter plusieurs clients--- \n");
+	printf("\t \t \t --------3--Affichage-------------\n");
+	printf("\t \t \t --------4--Operations-------------\n");
+	printf("\t \t \t --------5--Quitter--------------- \n");
 	printf("Entrez votre choix: \t");
 	scanf("%d",&Menu_Bank_X);
 	switch (Menu_Bank_X)
 		{
 			case 1: 
 				printf("Nouveau client \n");
-				client1();
+				client1(f);
 				break;
 			case 2: 
 				printf("Ajouter plusieurs clients \n");
-				clientn();
+				clientns(f);
 				break;
 			case 3: 
 				printf("Affichage \n");
-				affichage();
+				affichage(f);
 				break;
 			case 4: 
 				printf("Operations \n");
-				
 				break;
 			case 5: 
 				printf("Quitter \n") ;
@@ -119,30 +132,6 @@ void menu()
 				printf("Eureur de saisie \n");
 				break;		
 		}
-}
-
-//***__________Affichage_________****//
-void affichage();
-{
-    printf("Veuillez effectuer un choix \n");
-    int c ;
-    printf("1- Les montant des comptes ascendant \t");
-    printf("2- Les montant des comptes descendant \t");
-	printf("3- Recherche par CIN \t");
-    scanf("%d",&c);
-    switch(c)
-    {
-        case 1: printf("Montant ascendant \n");
-                ascendant();
-                break;
-        case 2: printf("Montant descendant \n");
-                descendant();
-                break;
-        case 3: printf("Recherche par CIN");
-				Recherche();
-                break;
-    }
-    
 }
 //***___________Ascendant__________***//
 void ascendant()
@@ -162,7 +151,7 @@ void ascendant()
         }
     printf("\n Les Montant des Comptes Croissant");
         
-
+	
     fclose(f);
 }
 //***________Descendant___________***//
@@ -173,67 +162,75 @@ void descendant()
     printf("Tri descendant des montants");
     f = fopen("Donnees_clients.txt","r");
     
-		for(i=0;i<Max;++i){
-            for(j=i+1;j=Max;++j){
-                if(clientn[i].Montant<clientn[j].Montant)
-                tmp= clientn[i].Montant;
-               clientn[i].Montant = clientn[j].Montant;
-                clientn[j].Montant= tmp;
+		for(i=0;i<Max-1;i++){
+            for(j=0;j<Max-i-1;j++){
+                if(clientn[i].Montant>clientn[j+1].Montant)
+                tmp= clientn[j].Montant;
+               clientn[j].Montant = clientn[j+1].Montant;
+                clientn[j+1].Montant= tmp;
             }
         }
     printf("\n Les Montant des Comptes Decroissant");
-        
-
-    fclose(f);
+	// fgets("Nom, Prenom, CIN, Montant %s,%s,%s,%.2f");
+	fclose(f);
 }
+
+//***__________Affichage_________****//
+void affichage()
+{
+    printf("Veuillez effectuer un choix \n");
+    int c ;
+    printf("1- Les montant des comptes ascendant \t");
+    printf("2- Les montant des comptes descendant \t");
+	printf("3- Recherche par CIN \t");
+    scanf("%d",&c);
+    switch(c)
+    {
+        case 1: printf("Montant ascendant \n");
+                ascendant();
+                break;
+        case 2: printf("/n Montant descendant \n");
+                descendant();
+                break;
+        case 3: printf(" /n Recherche par CIN /n");
+				rechercher();
+                break;
+    }
+    
+}
+
 //***______Fonction recherche_______***//
+void rechercher()
+{
 
-void Recherche {
-	chercher();
-	afficher();
-	Lister();
+	int i,exist;
+    char B[20];
+
+	FILE *f = fopen("Donnees_clients.txt","r");
+	
+	if (f==NULL)
+		printf("le fichier n'existe pas \n");
+	else
+	{ 
+		printf("Entrez le CIN: \n");
+		scanf("%d",&B);
+	}
+		
+		
+		for(i=0;i<Max;i++)
+		{ 
+			fscanf(f,"%s",&clientn[i].CIN);
+			if(strcmp(clientn[i].CIN,B)==0)
+			{  exist=1;
+			fprintf(f,"%s \t %s \t %s \t %.2f",clientn[i].Nom,clientn[i].Prenom,clientn[i].CIN,clientn[i].Montant);}
+			else 
+			printf("Ce CIN n'existe pas");
+			
+		}
+		
+		fclose(f);
 }
-int chercher(FILE *f,int compte){  //fonction Pour chercher un compte
-            Bank clientn;
-            int trouve=0, ret;
-            rewind(f);
-            while(!trouve){
-                       ret=fread(&clientn,sizeof(Bank),1,f);
-                       if(ret==0)break;
-                       if(clientn.CIN==compte){
-                                   fseek(f,-11*sizeof(Bank),SEEK_CUR);
-                                   return 1;
-                       							}
-            					}
-            return 0;
- 
-}
-void afficher(FILE *f){   //fonction pour montrer le compte chervher
-            Bank cli;
-            char compte[Max],nom[Max];
-            float M,ret;
-            printf("Consultation par Cin\n");
-            printf("Numero du compte:");
-            scanf("%d",&compte);
-            ret=chercher(f,compte);
-            if(ret==0){
-                       printf("Compte inexistant...\n");
-            }
-            else{
-                       fread(&cli,sizeof(Bank),1,f);
-                       printf("Nom:\t%s\nPrenom:\t%s\nMontant: %.2f\n",cli.Nom,cli.Prenom,cli.Montant);
-				}
-}
- 
-void lister(FILE *f){   //fontion pour lister tous les comptes deja ajouter
-            Bank cli;
-            rewind(f);
-            printf("listage du contenu du fichier.\n");
-            printf("Nom\t\tPrenom\t\tCIN\t\tMontant\n");
-            while(fread(&cli,sizeof(Bank),1,f)==1){
-                       printf("%s\t\t%s\t\t%s\t\t%.2f\n",cli.Nom,cli.Prenom,cli.CIN,cli.Montant);
-            }
-}
+
 
 //***_______Operations________***//
 
@@ -245,3 +242,4 @@ int main()
 	
 	return 0;
 }
+
