@@ -19,7 +19,9 @@ FILE *f;
 void clientns() 
 {
 
-	int i, n= 3;
+	int i, n;
+	printf("Saisie le nombre de client a ajoute");
+	scanf("%d",&n);
 //***________Fichier Cree_______***//
 	f = fopen("Donnees_clients.txt","a");
 	
@@ -63,70 +65,32 @@ void clientns()
 	system("cls");
 	menu();
 }
-//***________Fonction Nouveau Client______***//
-void client1()
-{
-	Bank client1;
-	f = fopen("Donnees_clients.txt","a");
-	if (f==NULL){
-		printf("le fichier n'existe pas \n");
-	}
-	else
-	{ 	system ("cls");
-		printf("Donnez les information de nouveau client : \n");
-			
-			printf("Donner le Nom : ");
-			scanf("%s",client1.Nom );
-			printf("Donner le Prenom : ");
-			scanf("%s",client1.Prenom );
-			printf("Donner le CIN : ");
-			scanf("%s",client1.CIN );
-			printf("Donner le Montant: ");
-			scanf("%f",&client1.Montant );
-			fprintf(f ,"%s \t", client1.Nom);
-			
-			fprintf(f ,"%s \t", client1.Prenom);
-			
-			fprintf(f ,"%s \t", client1.CIN);
-			
-			fprintf(f ,"%.2f \t", client1.Montant); 
-			fprintf(f,"\n"); }
-		
-	fclose(f);
-	system("cls");
-	menu();
-}
-
 
 //********_____________Menu_____________**********//
 void menu()
 { int Menu_Bank_X;
 	printf("\t \t \t ********Menu Bank X*********** \n");
-	printf("\t \t \t --------1--Nouveau clients----- \n");
-	printf("\t \t \t --------2--Ajouter plusieurs clients--- \n");
-	printf("\t \t \t --------3--Affichage-------------\n");
-	printf("\t \t \t --------4--Operations-------------\n");
-	printf("\t \t \t --------5--Quitter--------------- \n");
+	printf("\t \t \t --------1--Ajouter plusieurs clients--- \n");
+	printf("\t \t \t --------2--Affichage-------------\n");
+	printf("\t \t \t --------3--Operations-------------\n");
+	printf("\t \t \t --------4--Quitter--------------- \n");
 	printf("Entrez votre choix: \t");
 	scanf("%d",&Menu_Bank_X);
+	system("cls");
 	switch (Menu_Bank_X)
 		{
 			case 1: 
-				printf("Nouveau client \n");
-				client1(f);
-				break;
-			case 2: 
-				printf("Ajouter plusieurs clients \n");
+				printf("Ajouter un ou plusieurs clients \n");
 				clientns(f);
 				break;
-			case 3: 
+			case 2: 
 				printf("Affichage \n");
 				affichage(f);
 				break;
-			case 4: 
+			case 3: 
 				printf("Operations \n");
 				break;
-			case 5: 
+			case 4: 
 				printf("Quitter \n") ;
 				break;
 			default: 
@@ -184,6 +148,7 @@ void affichage()
     printf("1- Les montant des comptes ascendant \t");
     printf("2- Les montant des comptes descendant \t");
 	printf("3- Recherche par CIN \t");
+	printf("0- Retour au Menu principale \t ");
     scanf("%d",&c);
     switch(c)
     {
@@ -193,9 +158,12 @@ void affichage()
         case 2: printf("/n Montant descendant \n");
                 descendant();
                 break;
-        case 3: printf(" /n Recherche par CIN /n");
+        case 3: printf(" \n Recherche par CIN \n");
 				rechercher();
                 break;
+        case 0: printf("\n Retour au Menu principale \n "); 
+				menu();
+				break;       
     }
     
 }
