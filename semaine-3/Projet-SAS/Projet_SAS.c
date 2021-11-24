@@ -1,7 +1,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#define Max 10
+#define Max 100
 void menu();
 void affichage();
 void rechercher();
@@ -18,6 +18,7 @@ FILE *f;
 //***___________Fonction client_________***//
 void clientns() 
 {
+
 	int i, n= 3;
 //***________Fichier Cree_______***//
 	f = fopen("Donnees_clients.txt","a");
@@ -27,7 +28,7 @@ void clientns()
 	}
 	else
 	{ //***_______Boucle de creation de donnes pour 3 clients______***//
-		n<=Max;
+	
 		
 		for(i=0;i<n;i++)
 		{
@@ -48,10 +49,10 @@ void clientns()
 		}
 		for(i=0;i<n;i++)
 		{
-	    	fprintf(f ,"Nom: %s \t", clientn[i].Nom);
-			fprintf(f ,"Prenom: %s \t", clientn[i].Prenom);
-			fprintf(f ,"CIN: %s \t", clientn[i].CIN);
-			fprintf(f ,"Montant: %.2f \t", clientn[i].Montant);
+	    	fprintf(f , "%s \t", clientn[i].Nom);
+			fprintf(f ,"%s \t", clientn[i].Prenom);
+			fprintf(f ,"%s \t", clientn[i].CIN);
+			fprintf(f ," %.2f \t", clientn[i].Montant);
 			fprintf(f,"\n");
 			
 		}
@@ -82,13 +83,13 @@ void client1()
 			scanf("%s",client1.CIN );
 			printf("Donner le Montant: ");
 			scanf("%f",&client1.Montant );
-			fprintf(f ,"Nom: %s \t", client1.Nom);
+			fprintf(f ,"%s \t", client1.Nom);
 			
-			fprintf(f ,"Prenom: %s \t", client1.Prenom);
+			fprintf(f ,"%s \t", client1.Prenom);
 			
-			fprintf(f ,"CIN: %s \t", client1.CIN);
+			fprintf(f ,"%s \t", client1.CIN);
 			
-			fprintf(f ,"Montant: %.2f \t", client1.Montant); 
+			fprintf(f ,"%.2f \t", client1.Montant); 
 			fprintf(f,"\n"); }
 		
 	fclose(f);
@@ -203,7 +204,7 @@ void affichage()
 void rechercher()
 {
 
-	int i,exist;
+	int i;
     char B[20];
 
 	FILE *f = fopen("Donnees_clients.txt","r");
@@ -213,21 +214,22 @@ void rechercher()
 	else
 	{ 
 		printf("Entrez le CIN: \n");
-		scanf("%d",&B);
+		scanf("%s",&B);
 	}
 		
 		
 		for(i=0;i<Max;i++)
 		{ 
-			fscanf(f,"%s",&clientn[i].CIN);
-			if(strcmp(clientn[i].CIN,B)==0)
-			{  exist=1;
-			fprintf(f,"%s \t %s \t %s \t %.2f",clientn[i].Nom,clientn[i].Prenom,clientn[i].CIN,clientn[i].Montant);}
-			else 
-			printf("Ce CIN n'existe pas");
 			
+			fscanf(f,"%s\t%s\t%s\t%f",&clientn[i].Nom,&clientn[i].Prenom,&clientn[i].CIN,&clientn[i].Montant);
+			if(strcmp(clientn[i].CIN,B)==0)
+			{ 	
+			
+		printf("%s \t %s \t %s \t %f",clientn[i].Nom,clientn[i].Prenom,clientn[i].CIN,clientn[i].Montant);
+		fclose(f);
+		return;	
+			 }
 		}
-		
 		fclose(f);
 }
 
@@ -242,4 +244,3 @@ int main()
 	
 	return 0;
 }
-
