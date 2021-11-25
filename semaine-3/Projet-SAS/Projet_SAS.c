@@ -8,6 +8,8 @@ void rechercher();
 void operetions();
 void depot();
 void retrait();
+void descendant();
+//void Fidelisation();
 
 int indice;
 
@@ -75,10 +77,11 @@ void clientns()
 void menu()
 { int Menu_Bank_X;
 	printf("\t \t \t ********Menu Bank X*********** \n");
-	printf("\t \t \t --------1--Ajouter plusieurs clients--- \n");
+	printf("\t \t \t --------1--Ajouter un ou plusieurs clients--- \n");
 	printf("\t \t \t --------2--Affichage-------------\n");
 	printf("\t \t \t --------3--Operations-------------\n");
-	printf("\t \t \t --------4--Quitter--------------- \n");
+	printf("\t \t \t --------4--Fidelisation-----------\n");
+	printf("\t \t \t --------5--Quitter--------------- \n");
 	printf("Entrez votre choix: \t");
 	scanf("%d",&Menu_Bank_X);
 	system("cls");
@@ -96,8 +99,11 @@ void menu()
 				printf("\t ===========Operations============= \n");
 				operetions();
 				break;
-			case 4: 
-				printf("Quitter \n") ;
+			case 4:
+				printf("\t ==========Fidelisation============= \n");
+				//Fidelisation();
+			case 5: 
+				printf("A bientot") ;
 				break;
 			default: 
 				printf("Eureur de saisie \n");
@@ -112,6 +118,7 @@ void ascendant()
     printf("Tri ascendant des montants");
     f = fopen("Donnees_clients.txt","r");
     
+    fscanf(f,"%s %s %s %f",&clientn[i].Nom,&clientn[i].Prenom,&clientn[i].CIN,&clientn[i].Montant);
 		for(i=0;i<Max;i++){
             for(j=i+1;j=Max;j++){
                 if(clientn[i].Montant>clientn[j].Montant)
@@ -121,7 +128,7 @@ void ascendant()
             }
         }
     printf("\n Les Montant des Comptes Croissant");
-        
+    printf("%s %s %s %f",clientn[i].Nom,clientn[i].Prenom,clientn[i].CIN,clientn[i].Montant);
 	
     fclose(f);
 }
@@ -131,8 +138,9 @@ void descendant()
     Bank clientn[Max];
     int i,j,tmp;
     printf("Tri descendant des montants");
-    f = fopen("Donnees_clients.txt","r");
+    FILE *f = fopen("Donnees_clients.txt","r");
     
+	fscanf(f,"%s %s %s %f",&clientn[i].Nom,&clientn[i].Prenom,&clientn[i].CIN,&clientn[i].Montant);
 		for(i=0;i<Max-1;i++){
             for(j=0;j<Max-i-1;j++){
                 if(clientn[i].Montant>clientn[j+1].Montant)
@@ -140,8 +148,9 @@ void descendant()
                clientn[j].Montant = clientn[j+1].Montant;
                 clientn[j+1].Montant= tmp;
             }
+			 printf("\n Les Montant des Comptes Decroissant/n");
+			 printf("%s %s %s %f",clientn[i].Nom,clientn[i].Prenom,clientn[i].CIN,clientn[i].Montant);
         }
-    printf("\n Les Montant des Comptes Decroissant");
 	fclose(f);
 }
 
@@ -196,7 +205,7 @@ void rechercher()
 			
 			fscanf(f,"%s\t%s\t%s\t%f",&clientn[i].Nom,&clientn[i].Prenom,&clientn[i].CIN,&clientn[i].Montant);
 			if(strcmp(clientn[i].CIN,B)==0)
-			{ 	
+			{ 
 			
 		printf("%s \t %s \t %s \t %f",clientn[i].Nom,clientn[i].Prenom,clientn[i].CIN,clientn[i].Montant);
 		fclose(f);
@@ -221,17 +230,15 @@ void operetions()
 	{
 		case 1: printf("********Depot***********\n");
 				depot();
-				printf("\n Revenir au menu principale:");
-				menu();
-		break;
+				break;
 		case 2: printf("********Retrait***********\n");
 				retrait();
 				printf("\n Revenir au menu principale:");
 				menu();
-		break;
+				break;
 		default:
-		menu();
-		break;
+				menu();
+				break;
 	}
 
 
@@ -243,16 +250,31 @@ void depot()
 	float d , x;
 	printf("\n Veuillez entrer le Montant a deposer: \n");
 	scanf("%f",&x);
-	FILE *f = fopen("Donnes_clients.txt","a");
-	{
-		d= clientn[indice].Montant+x;
-		fprintf(f,"%f",d);
-		fscanf(f,"%s %s %s %f",&clientn[indice].Nom,&clientn[indice].Prenom,&clientn[indice].CIN,&d);
-		printf("%s %s %s Nouveu Montant: %f",clientn[indice].Nom,clientn[indice].Prenom,clientn[indice].CIN,d);
-		fclose(f);
-	}
+	FILE *f = fopen("Donnees_clients.txt","a");
+
+	d= clientn[indice].Montant +x;
+	fprintf(f,"%f",d);
+	fscanf(f,"%s %s %s %f",&clientn[indice].Nom,&clientn[indice].Prenom,&clientn[indice].CIN,&d);
+	printf("%s %s %s Nouveu Montant: %f",clientn[indice].Nom,clientn[indice].Prenom,clientn[indice].CIN,d);
+	fclose(f);
 	
 }
+// //***_______Fidelisation_____***//
+// void Fidelisation()
+// {
+// 	const y= 10000;
+// 	Bank clientn[indice];
+// 	float t, p;
+// 	descendant();
+// 	FILE*f = fopen("Donnees_clients.txt","a");
+// 	t=clientn[indice]*(13/100);
+// 	fscanf(f,"%s %s %s %f",&clientn[indice].Nom,&clientn[indice].Prenom,&clientn[indice].CIN,&clientn[indice].Montant);
+// 	if(strcmp(clientn[indice].Montant,y)==0)
+// 	printf("%s %s %s %f",clientn[indice].Nom,clientn[indice].Prenom,clientn[indice].CIN,clientn[indice].Montant);
+// 	return;
+// 	fclose(f);
+
+// }
 
 //*****__________Retrait__________****//
 void retrait()
@@ -261,14 +283,15 @@ void retrait()
 	float r , u;
 	printf("\n Veuillez entrer le Montant a retrait: \n");
 	scanf("%f",&u);
-	FILE *f = fopen("Donnes_clients.txt","a");
-	{
-		r= clientn[indice].Montant-u;
-		fprintf(f,"%f",r);
-		fscanf(f,"%s %s %s %f",&clientn[indice].Nom,&clientn[indice].Prenom,&clientn[indice].CIN,&r);
-		printf("%s %s %s Nouveu Montant: %f",clientn[indice].Nom,clientn[indice].Prenom,clientn[indice].CIN,r);
-		fclose(f);
-	}
+	FILE *f = fopen("Donnees_clients.txt","a");
+
+	r= clientn[indice].Montant-u;
+	
+	fprintf(f,"%f",r);
+	fscanf(f,"%s %s %s %f",&clientn[indice].Nom,&clientn[indice].Prenom,&clientn[indice].CIN,&r);
+	printf("%s %s %s Nouveu Montant: %f",clientn[indice].Nom,clientn[indice].Prenom,clientn[indice].CIN,r);
+	fclose(f);
+
 	
 }
 
