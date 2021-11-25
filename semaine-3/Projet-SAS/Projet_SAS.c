@@ -5,6 +5,11 @@
 void menu();
 void affichage();
 void rechercher();
+void operetions();
+void depot();
+void retrait();
+
+int indice;
 
 typedef struct{
 	char Nom[12] ;
@@ -84,11 +89,12 @@ void menu()
 				clientns(f);
 				break;
 			case 2: 
-				printf("Affichage \n");
+				printf("\t =============Affichage============= \n");
 				affichage(f);
 				break;
 			case 3: 
-				printf("Operations \n");
+				printf("\t ===========Operations============= \n");
+				operetions();
 				break;
 			case 4: 
 				printf("Quitter \n") ;
@@ -136,7 +142,6 @@ void descendant()
             }
         }
     printf("\n Les Montant des Comptes Decroissant");
-	// fgets("Nom, Prenom, CIN, Montant %s,%s,%s,%.2f");
 	fclose(f);
 }
 
@@ -195,6 +200,7 @@ void rechercher()
 			
 		printf("%s \t %s \t %s \t %f",clientn[i].Nom,clientn[i].Prenom,clientn[i].CIN,clientn[i].Montant);
 		fclose(f);
+		indice = i;
 		return;	
 			 }
 		}
@@ -203,7 +209,68 @@ void rechercher()
 
 
 //***_______Operations________***//
+void operetions()
+{	
+	int z; 
+	printf("\n \t \t______1- Depot:_________\n");
+	printf("\n \t \t______2- Retrait:_______ \n");
+	printf("\nTapez un autre nombre pour revenir au menu principale: \n");
+	scanf("%d",&z);
+	system("cls");
+	switch (z)
+	{
+		case 1: printf("********Depot***********\n");
+				depot();
+				printf("\n Revenir au menu principale:");
+				menu();
+		break;
+		case 2: printf("********Retrait***********\n");
+				retrait();
+				printf("\n Revenir au menu principale:");
+				menu();
+		break;
+		default:
+		menu();
+		break;
+	}
 
+
+}
+//*****__________Depot__________****//
+void depot()
+{
+	rechercher();
+	float d , x;
+	printf("\n Veuillez entrer le Montant a deposer: \n");
+	scanf("%f",&x);
+	FILE *f = fopen("Donnes_clients.txt","a");
+	{
+		d= clientn[indice].Montant+x;
+		fprintf(f,"%f",d);
+		fscanf(f,"%s %s %s %f",&clientn[indice].Nom,&clientn[indice].Prenom,&clientn[indice].CIN,&d);
+		printf("%s %s %s Nouveu Montant: %f",clientn[indice].Nom,clientn[indice].Prenom,clientn[indice].CIN,d);
+		fclose(f);
+	}
+	
+}
+
+//*****__________Retrait__________****//
+void retrait()
+{
+	rechercher();
+	float r , u;
+	printf("\n Veuillez entrer le Montant a retrait: \n");
+	scanf("%f",&u);
+	FILE *f = fopen("Donnes_clients.txt","a");
+	{
+		r= clientn[indice].Montant-u;
+		fprintf(f,"%f",r);
+		fscanf(f,"%s %s %s %f",&clientn[indice].Nom,&clientn[indice].Prenom,&clientn[indice].CIN,&r);
+		printf("%s %s %s Nouveu Montant: %f",clientn[indice].Nom,clientn[indice].Prenom,clientn[indice].CIN,r);
+		fclose(f);
+	}
+	
+}
 
 //***_________fonction main_______***//
 int main()
