@@ -9,7 +9,6 @@ void operetions();
 void depot();
 void retrait();
 void descendant();
-//void Fidelisation();
 
 int indice;
 
@@ -259,22 +258,7 @@ void depot()
 	fclose(f);
 	
 }
-// //***_______Fidelisation_____***//
-// void Fidelisation()
-// {
-// 	const y= 10000;
-// 	Bank clientn[indice];
-// 	float t, p;
-// 	descendant();
-// 	FILE*f = fopen("Donnees_clients.txt","a");
-// 	t=clientn[indice]*(13/100);
-// 	fscanf(f,"%s %s %s %f",&clientn[indice].Nom,&clientn[indice].Prenom,&clientn[indice].CIN,&clientn[indice].Montant);
-// 	if(strcmp(clientn[indice].Montant,y)==0)
-// 	printf("%s %s %s %f",clientn[indice].Nom,clientn[indice].Prenom,clientn[indice].CIN,clientn[indice].Montant);
-// 	return;
-// 	fclose(f);
 
-// }
 
 //*****__________Retrait__________****//
 void retrait()
