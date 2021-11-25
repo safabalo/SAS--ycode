@@ -26,7 +26,7 @@ void clientns()
 {
 
 	int i, n;
-	printf("Saisie le nombre de client a ajoute");
+	printf("Saisie le nombre de client a ajouter :  ");
 	scanf("%d",&n);
 //***________Fichier Cree_______***//
 	f = fopen("Donnees_clients.txt","a");
@@ -35,7 +35,7 @@ void clientns()
 		printf("le fichier n'existe pas \n");
 	}
 	else
-	{ //***_______Boucle de creation de donnes pour 3 clients______***//
+	{ 
 	
 		
 		for(i=0;i<n;i++)
@@ -77,8 +77,8 @@ void menu()
 { int Menu_Bank_X;
 	printf("\t \t \t ********Menu Bank X*********** \n");
 	printf("\t \t \t --------1--Ajouter un ou plusieurs clients--- \n");
-	printf("\t \t \t --------2--Affichage-------------\n");
-	printf("\t \t \t --------3--Operations-------------\n");
+	printf("\t \t \t --------2--Operations-------------\n");
+	printf("\t \t \t --------3--Affichage-------------\n");
 	printf("\t \t \t --------4--Fidelisation-----------\n");
 	printf("\t \t \t --------5--Quitter--------------- \n");
 	printf("Entrez votre choix: \t");
@@ -91,13 +91,15 @@ void menu()
 				clientns(f);
 				break;
 			case 2: 
-				printf("\t =============Affichage============= \n");
-				affichage(f);
-				break;
-			case 3: 
 				printf("\t ===========Operations============= \n");
 				operetions();
 				break;
+				
+			case 3: 
+				printf("\t =============Affichage============= \n");
+				affichage(f);
+				break;
+				
 			case 4:
 				printf("\t ==========Fidelisation============= \n");
 				//Fidelisation();
@@ -248,7 +250,12 @@ void depot()
 	rechercher();
 	float d , x;
 	printf("\n Veuillez entrer le Montant a deposer: \n");
+		do{
+	printf("\Le montant doit etre positive \n");
 	scanf("%f",&x);
+	system("cls");
+	menu();}
+	
 	FILE *f = fopen("Donnees_clients.txt","a");
 
 	d= clientn[indice].Montant +x;
@@ -266,7 +273,12 @@ void retrait()
 	rechercher();
 	float r , u;
 	printf("\n Veuillez entrer le Montant a retrait: \n");
+	do{
+	printf("\Le montant doit etre positive \n");
 	scanf("%f",&u);
+	system("cls");
+	menu();}
+	while(u<0);
 	FILE *f = fopen("Donnees_clients.txt","a");
 
 	r= clientn[indice].Montant-u;
