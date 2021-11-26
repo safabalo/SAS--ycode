@@ -79,15 +79,14 @@ void menu()
 	printf("\t \t \t --------1--Ajouter un ou plusieurs clients--- \n");
 	printf("\t \t \t --------2--Operations-------------\n");
 	printf("\t \t \t --------3--Affichage-------------\n");
-	printf("\t \t \t --------4--Fidelisation-----------\n");
-	printf("\t \t \t --------5--Quitter--------------- \n");
+	printf("\t \t \t --------4--Quitter--------------- \n");
 	printf("Entrez votre choix: \t");
 	scanf("%d",&Menu_Bank_X);
 	system("cls");
 	switch (Menu_Bank_X)
 		{
 			case 1: 
-				printf("Ajouter un ou plusieurs clients \n");
+				printf("\t \t==============Ajouter un ou plusieurs clients============== \n");
 				clientns(f);
 				break;
 			case 2: 
@@ -100,11 +99,8 @@ void menu()
 				affichage(f);
 				break;
 				
-			case 4:
-				printf("\t ==========Fidelisation============= \n");
-				//Fidelisation();
-			case 5: 
-				printf("A bientot") ;
+
+			case 4: printf("A bientot") ;
 				break;
 			default: 
 				printf("Eureur de saisie \n");
