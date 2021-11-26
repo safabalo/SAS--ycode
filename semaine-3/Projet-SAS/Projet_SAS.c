@@ -250,7 +250,7 @@ void depot()
 	printf("\Le montant doit etre positive \n");
 	scanf("%f",&x);
 	system("cls");
-	menu();}
+	menu();}while(x<0);
 	
 	FILE *f = fopen("Donnees_clients.txt","a");
 
